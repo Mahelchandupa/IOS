@@ -1,79 +1,49 @@
 import SwiftUI
 
 struct MenuView: View {
-    @State private var showGame = false
-    @State private var = showHighScores = false
-    @State private var showGuide = false
-    @State private var highScore = 0
-
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Square Game")
-                    .font(.largeTitle)
-                    .padding(.top)
-                
-                Spacer()
+            ZStack {
+                Color(UIColor.systemGray6)
+                    .ignoresSafeArea()
 
-                Button(action: {
-                    showGame = true
-                }) {
-                    Text("Start Game")
-                        .font(.title2)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                VStack(spacing: 30) {
+                    Text("Square Game")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.primary)
+                        .padding(.bottom, 40)
+
+                    VStack(spacing: 20) {
+                        NavigationLink(destination: GameView()) {
+                            buttonStyle(text: "Start Game", backgroundColor: .blue)
+                        }
+
+                        NavigationLink(destination: HighScoreView()) {
+                            buttonStyle(text: "High Scores", backgroundColor: .green)
+                        }
+
+                        NavigationLink(destination: GuideView()) {
+                            buttonStyle(text: "Guide", backgroundColor: .orange)
+                        }
+                    }
+
+                    Spacer()
                 }
-                .padding(.horizontal)
-
-                Button(action: {
-                    showHighScores = true
-                }) {
-                    Text("High Scores")
-                        .font(.title2)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                .padding(.horizontal)
-
-                Button(action: {
-                    showGuide = true
-                }) {
-                    Text("How to Play")
-                        .font(.title2)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                .padding(.horizontal)
-
-                Button(action: {
-                    exit(0)
-                }) {
-                    Text("Exit")
-                        .font(.title2)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                .padding(.horizontal)
-
-                Spacer()
+                .padding()
             }
-            .padding()
-            .background(NavigationView("", destination: GameView(highScore: $highScore), isActive: $showGame).hidden())
-            .background(NavigationView("", destination: HighScoresView(highScore: highScore), isActive: $showHighScores).hidden())
-            .background(NavigationView("", destination: GuideView(), isActive: $showGuide).hidden())
         }
+    }
+
+    private func buttonStyle(text: String, backgroundColor: Color) -> some View {
+        Text(text)
+            .font(.headline)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity, minHeight: 50)
+            .background(backgroundColor)
+            .cornerRadius(12)
+            .shadow(color: backgroundColor.opacity(0.4), radius: 8, x: 0, y: 4)
+            .padding(.horizontal, 16)
     }
 }
 
